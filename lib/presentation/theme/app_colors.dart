@@ -5,4 +5,5 @@ abstract class AppColors {
   static const Color secondary = Color(0xFF522F65);
   static const Color accent = Color(0xFFFBF4F9);
 
+
 }
