@@ -14,6 +14,7 @@ class BooksResultsListing extends StatelessWidget {
       separatorBuilder: (context, index) => 12.verticalSpace,
       itemBuilder: (context, index) => Column(
         children: [
+          if(index == 0) 16.verticalSpace,
           const BookCard(),
           if(index == itemCount-1) 32.verticalSpace,
         ],
