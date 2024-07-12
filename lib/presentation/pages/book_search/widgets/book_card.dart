@@ -2,10 +2,12 @@ import 'package:booky/presentation/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../data/models/book.dart';
 import '../../../theme/text_style.dart';
 
 class BookCard extends StatelessWidget {
-  const BookCard({super.key});
+  final Book book;
+  const BookCard(this.book, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +16,8 @@ class BookCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16.w,),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
-        image: const DecorationImage(
-          image: NetworkImage('https://marketplace.canva.com/EAFaQMYuZbo/1/0/1003w/canva-brown-rusty-mystery-novel-book-cover-hG1QhA7BiBU.jpg',),
+        image: DecorationImage(
+          image: NetworkImage(book.cover,),
           fit: BoxFit.cover,
         ),
       ),
@@ -40,7 +42,7 @@ class BookCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'The lord of the rings',
+                    book.title,
                     style: AppTextStyle.style.copyWith(
                       color: AppColors.accent,
                       fontSize: 18.sp,
@@ -56,7 +58,7 @@ class BookCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'When Mr. Bilbo Baggins of Bag End announced that he would shortly be celebrating his eleventy-first birthday with a party of special magnificence, there was much talk and excitement in Hobbiton',
+                    book.firstSentence,
                     style: AppTextStyle.style.copyWith(
                       color: AppColors.accent,
                       fontSize: 12.sp,

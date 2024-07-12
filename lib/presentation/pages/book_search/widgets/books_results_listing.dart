@@ -1,13 +1,15 @@
-import 'package:booky/presentation/pages/home/widgets/book_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../data/models/book.dart';
+import 'book_card.dart';
 
 class BooksResultsListing extends StatelessWidget {
-  const BooksResultsListing({super.key});
+  final List<Book> books;
+  const BooksResultsListing(this.books, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    const itemCount = 10;
+    final itemCount = books.length;
     return ListView.separated(
       padding: EdgeInsets.zero,
       itemCount: itemCount,
@@ -15,7 +17,7 @@ class BooksResultsListing extends StatelessWidget {
       itemBuilder: (context, index) => Column(
         children: [
           if(index == 0) 16.verticalSpace,
-          const BookCard(),
+          BookCard(books[index]),
           if(index == itemCount-1) 32.verticalSpace,
         ],
       ),

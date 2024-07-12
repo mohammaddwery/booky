@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 
-import '../pages/home/view/home_page.dart';
+import '../pages/book_search/view/book_search_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -9,6 +9,6 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: HomeRoute.page, path: '/',),
+    AutoRoute(page: BookSearchRoute.page, path: '/',),
   ];
 }

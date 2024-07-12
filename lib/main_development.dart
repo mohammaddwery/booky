@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:booky/bootstrap.dart';
 import 'app.dart';
 
 void main() {
-  runApp(MyApp());
+  bootstrap(() => MyApp());
 }
