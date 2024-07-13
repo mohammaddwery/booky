@@ -26,9 +26,8 @@ class BooksSearchResults extends StatelessWidget {
             SearchStateError() => Center(child: CustomError(
               message: state.error,
               textStyle: AppTextStyle.errorStateStyle,
-              onRetryClicked: () {
-                  // TODO
-            },)),
+              onRetryClicked: () => context.read<BookSearchBloc>().add(const BooksRequested()),
+            )),
             SearchStateSuccess() => BooksResultsListing(state.books),
             };
           },
