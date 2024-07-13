@@ -64,5 +64,6 @@ extension BookExtension on Book {
 }
 
 extension BooksExtension on List<Book> {
-  List<Book> filterBooksByAuthorAndTitle(String keyword) => List<Book>.from(where((element) => element.title.contains(keyword) || element.authorName.contains(keyword)));
+  List<Book> filterBooksByAuthorAndTitle(String keyword) => List<Book>.from(where((element) => element.title.toLowerCase().contains(keyword.toLowerCase())
+      || element.authorName.toLowerCase().contains(keyword.toLowerCase())));
 }

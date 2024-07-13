@@ -22,7 +22,7 @@ class CustomError extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if(onRetryClicked!=null) IconButton(onPressed: onRetryClicked, icon: const Icon(Icons.refresh),),
+          if(onRetryClicked!=null) IconButton(key: const Key('RetryIconButton'), onPressed: onRetryClicked, icon: const Icon(Icons.refresh),),
           Expanded(
             child: Text(
               message,

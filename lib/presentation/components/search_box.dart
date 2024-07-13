@@ -10,6 +10,7 @@ class SearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      key: const Key('SearchBoxKey'),
       onChanged: onChanged,
       maxLines: 1,
       textInputAction: TextInputAction.search,

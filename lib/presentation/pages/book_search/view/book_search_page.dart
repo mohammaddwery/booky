@@ -21,23 +21,29 @@ class BookSearchPage extends StatelessWidget {
         create: (context) => BookSearchBloc(
           context.read<BooksRepository>(),
         )..add(const BooksRequested()),
-        child: Builder(
-          builder: (context) {
-            return SafeArea(
-              child: Scaffold(
-                body: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    16.verticalSpace,
-                    const BooksSearchBox(),
-                    const BooksSearchResults(),
-                  ],
-                ),
-              ),
-            );
-          }
+        child: const BookSearchView(),
+      ),
+    );
+  }
+}
+
+class BookSearchView extends StatelessWidget {
+  const BookSearchView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            16.verticalSpace,
+            const BooksSearchBox(),
+            const BooksSearchResults(),
+          ],
         ),
       ),
     );
   }
 }
+

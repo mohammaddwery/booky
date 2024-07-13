@@ -21,7 +21,7 @@ dependencies:
   stream_transform: ^2.0.0
   flutter_screenutil: ^5.9.3
   get_it: ^7.2.0
-
+  mocktail_image_network: ^1.2.0
 
 
 dev_dependencies:

@@ -51,6 +51,9 @@ class BookSearchBloc extends Bloc<BookSearchEvent, BookSearchState> {
       KeywordChanged event,
       Emitter<BookSearchState> emit,
   ) async {
+    return emit(const SearchStateSuccess([]));
+
+
     final keyword = event.keyword;
 
     if (keyword.isEmpty) {
