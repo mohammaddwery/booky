@@ -1,15 +1,12 @@
-
 import 'package:booky/presentation/routes/app_router.dart';
 import 'package:booky/presentation/theme/app_colors.dart';
 import 'package:booky/presentation/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'core/di/dependencies_container.dart';
 
 class MyApp extends StatelessWidget {
-  final _appRouter = AppRouter();
-  MyApp({
-    super.key,
-  });
+  const MyApp({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +15,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          routerConfig: _appRouter.config(),
+          routerConfig: getIt.get<AppRouter>().config(),
           themeMode: ThemeMode.light,
           theme: ThemeData.light().copyWith(
             textTheme: Theme.of(context)

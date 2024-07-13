@@ -1,4 +1,4 @@
-import 'package:booky/core/app_constants.dart';
+import 'package:booky/core/utils/app_constants.dart';
 import 'package:equatable/equatable.dart';
 
 class Book extends Equatable {

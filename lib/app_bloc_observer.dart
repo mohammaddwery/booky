@@ -1,4 +1,4 @@
-import 'package:booky/core/app_logger.dart';
+import 'package:booky/core/utils/app_logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
