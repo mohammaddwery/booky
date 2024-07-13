@@ -7,11 +7,13 @@ abstract class ApiManager {
   void close({bool force=false});
   Future<dynamic> get({
     Map<String, String?> headers = const {},
+    Map<String, dynamic>? queryParameters,
     required String url,
   });
   Future<dynamic> post({
     Map<String, String?> headers = const {},
+    Map<String, dynamic>? queryParameters,
     required String url,
-    body,
+    Object? body,
   });
 }

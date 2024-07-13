@@ -1,6 +1,9 @@
+import 'package:booky/core/data/remote/app_exceptions.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/utils/app_logger.dart';
 import '../../../../data/models/book.dart';
+import '../../../../repository/books_repository.dart';
 import 'book_search_event.dart';
 import 'book_search_state.dart';
 
@@ -12,7 +15,8 @@ EventTransformer<Event> debounce<Event>(Duration duration) {
 }
 
 class BookSearchBloc extends Bloc<BookSearchEvent, BookSearchState> {
-  BookSearchBloc() : super(SearchStateLoading()) {
+  final BooksRepository _booksRepository;
+  BookSearchBloc(this._booksRepository) : super(SearchStateLoading()) {
     on<BooksRequested>(_onBooksRequested,);
     on<KeywordChanged>(_onKeywordChanged, transformer: debounce(_duration),);
   }
@@ -26,12 +30,20 @@ class BookSearchBloc extends Bloc<BookSearchEvent, BookSearchState> {
       BooksRequested event,
       Emitter<BookSearchState> emit,
       ) async {
-    emit(SearchStateLoading());
-    await Future.delayed(const Duration(seconds: 2,));
-    _books = List<Book>.from(Book.books);
-    if(_books.isEmpty) return emit(SearchStateEmpty());
+    try {
+      emit(SearchStateLoading());
 
-    return emit(SearchStateSuccess(_books));
+      _books = await _booksRepository.getBooks();
+      if(_books.isEmpty) return emit(SearchStateEmpty());
+
+      emit(SearchStateSuccess(_books..shuffle()));
+    } on AppException catch(e) {
+      logger.e('BookSearchBloc AppException', error: e.toString(),);
+      emit(SearchStateError(e.message));
+    } catch(e) {
+      logger.e('BookSearchBloc Exception', error: e,);
+      emit(const SearchStateError('something_went_wrong'));
+    }
   }
 
   /// Search functionality is working locally on books that fetched once app opened
@@ -39,11 +51,13 @@ class BookSearchBloc extends Bloc<BookSearchEvent, BookSearchState> {
       KeywordChanged event,
       Emitter<BookSearchState> emit,
   ) async {
-    if(_books.isEmpty) return emit(SearchStateEmpty());
-
     final keyword = event.keyword;
 
-    if (keyword.isEmpty) return emit(SearchStateSuccess(_books));
+    if (keyword.isEmpty) {
+      if(_books.isEmpty) return emit(SearchStateEmpty());
+
+      return emit(SearchStateSuccess(_books..shuffle()));
+    }
 
     emit(SearchStateLoading());
     /// to give better user experience only.
@@ -52,6 +66,6 @@ class BookSearchBloc extends Bloc<BookSearchEvent, BookSearchState> {
     final books = _books.filterBooksByAuthorAndTitle(keyword);
     if(books.isEmpty) return emit(SearchStateEmpty());
 
-    return emit(SearchStateSuccess(books));
+    return emit(SearchStateSuccess(books..shuffle()));
   }
 }

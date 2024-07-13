@@ -1,3 +1,4 @@
+import 'package:booky/presentation/pages/book_search/bloc/book_search_event.dart';
 import 'package:booky/presentation/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,20 +13,26 @@ class BooksSearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocBuilder<BookSearchBloc, BookSearchState>(
-        builder: (context, state) {
-          return switch (state) {
-          SearchStateEmpty() => const Center(child: CustomError(message: 'Sorry no results found!!')),
-          SearchStateLoading() => const Center(child: CircularProgressIndicator.adaptive()),
-          SearchStateError() => Center(child: CustomError(
-            message: state.error,
-            textStyle: AppTextStyle.errorStateStyle,
-            onRetryClicked: () {
-                // TODO
-          },)),
-          SearchStateSuccess() => BooksResultsListing(state.books),
-          };
+      child: RefreshIndicator(
+        onRefresh: () {
+          context.read<BookSearchBloc>().add(const BooksRequested());
+          return Future.value();
         },
+        child: BlocBuilder<BookSearchBloc, BookSearchState>(
+          builder: (context, state) {
+            return switch (state) {
+            SearchStateEmpty() => const Center(child: CustomError(message: 'Sorry no results found!!')),
+            SearchStateLoading() => const Center(child: CircularProgressIndicator.adaptive()),
+            SearchStateError() => Center(child: CustomError(
+              message: state.error,
+              textStyle: AppTextStyle.errorStateStyle,
+              onRetryClicked: () {
+                  // TODO
+            },)),
+            SearchStateSuccess() => BooksResultsListing(state.books),
+            };
+          },
+        ),
       ),
     );
   }

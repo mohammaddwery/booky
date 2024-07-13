@@ -18,18 +18,19 @@ class CustomError extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(48.r),
       alignment: Alignment.center,
-      child: FittedBox(
-        alignment: Alignment.center,
-        fit: BoxFit.scaleDown,
-        child: Row(
-          children: [
-            Text(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if(onRetryClicked!=null) IconButton(onPressed: onRetryClicked, icon: const Icon(Icons.refresh),),
+          Expanded(
+            child: Text(
               message,
               style: textStyle??AppTextStyle.emptyStateStyle,
+              textAlign: TextAlign.center,
             ),
-            if(onRetryClicked!=null) IconButton(onPressed: onRetryClicked, icon: const Icon(Icons.refresh))
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

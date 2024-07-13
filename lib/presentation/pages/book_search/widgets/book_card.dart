@@ -27,12 +27,12 @@ class BookCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           gradient: LinearGradient(
             colors: [
-              AppColors.primary.withOpacity(.35),
-              AppColors.primary.withOpacity(.075),
+              AppColors.primary.withOpacity(.75),
+              AppColors.primary.withOpacity(.15),
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
-            stops: const [.25, 1.0],
+            stops: const [.3, 1.0],
           ),
         ),
         child: Column(
@@ -58,11 +58,12 @@ class BookCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    book.firstSentence,
+                    book.firstSentence??book.subject??'',
                     style: AppTextStyle.style.copyWith(
                       color: AppColors.accent,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
+                      height: 1.3,
                     ),
                     maxLines: 2,
                   ),

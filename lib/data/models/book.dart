@@ -1,19 +1,49 @@
-import 'package:booky/core/utils/app_constants.dart';
+import 'package:booky/core/utils/build_config.dart';
 import 'package:equatable/equatable.dart';
+import '../../core/di/dependencies_container.dart';
+
+List<Book> adaptBooksFromJson(List<dynamic> json) {
+  return List<Book>.from(json.map((e) => Book.fromJson(e)).toList());
+}
 
 class Book extends Equatable {
   final String workId;
   final String authorName;
   final String title;
-  final int coverId;
-  final String firstSentence;
+  final int? coverId;
+  final String? firstSentence;
+  final String? subject;
   const Book({
     required this.workId,
     required this.authorName,
     required this.title,
-    required this.coverId,
-    required this.firstSentence,
+    this.coverId,
+    this.firstSentence,
+    this.subject,
   });
+
+  factory Book.fromJson(Map<String, dynamic> json) {
+    List<String> firstSentences = List<String>.from(json['first_sentence']??[]);
+    String? firstSentence = firstSentences.isNotEmpty ? firstSentences.first : null;
+
+    List<String> subjects = List<String>.from(json['subject']??[]);
+    String? subject = subjects.isNotEmpty ? subjects.first : null;
+
+    List<String> authorNames = List<String>.from(json['author_name']??[]);
+    String authorName = authorNames.isNotEmpty ? authorNames.first : '';
+
+    final workKey = (json['key']??'').toString();
+    final workId = workKey.startsWith('/') ? workKey.substring(1) : workKey;
+
+    return Book(
+      title: json['title']??'',
+      firstSentence: firstSentence,
+      subject: subject,
+      coverId: json['cover_i'],
+      authorName: authorName,
+      workId: workId,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -22,42 +52,15 @@ class Book extends Equatable {
     title,
     coverId,
     firstSentence,
-  ];
-  
-  static List<Book> books = [
-    const Book(
-      workId: 'OL27448W',
-      authorName: 'J.R.R. Tolkien',
-      title: 'The third book title!',
-      coverId: 14627060,
-      firstSentence: 'When Mr. Bilbo Baggins Hobbiton.',
-    ),
-    const Book(
-      workId: 'OL27448W',
-      authorName: 'J.R.R. Tolkien',
-      title: 'The second book title!',
-      coverId: 14627060,
-      firstSentence: 'When Mr. Bilbo Baggins of Bag End announced that he would shortly be.',
-    ),
-    const Book(
-      workId: 'OL27448W',
-      authorName: 'J.R.R. Tolkien',
-      title: 'The forth book title!',
-      coverId: 14627060,
-      firstSentence: 'party of special magnificence, there was much talk and excitement in Hobbiton.',
-    ),
-    const Book(
-      workId: 'OL27448W',
-      authorName: 'J.R.R. Tolkien',
-      title: 'The first book title!',
-      coverId: 14627060,
-      firstSentence: 'When Mr. Bilbo Baggins of Bag End announced that he would shortly magnificence, there was much talk and excitement in Hobbiton.',
-    ),
+    subject,
   ];
 }
 
 extension BookExtension on Book {
-  String get cover => '${AppConstants.coverBaseUrl}/$coverId-M.jpg';
+  String get cover {
+    if(coverId == null) return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnFSeIfLviNlTiizgznLZEG-4vmKvvZd7OS0RNseTf3FIzsg-jNR1zKZo7qN8UUwevSnc&usqp=CAU';
+    return '${getIt.get<BuildConfig>().coverImageBaseUrl}id/$coverId-M.jpg';
+  }
 }
 
 extension BooksExtension on List<Book> {

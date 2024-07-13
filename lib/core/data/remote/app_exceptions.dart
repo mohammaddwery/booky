@@ -3,63 +3,70 @@
 /// includes API's response exception(server errors) or send/receive request errors(client error)
 library;
 
-
-class RequestCancelledException implements Exception {
+class AppException implements Exception {
   final String message;
-  RequestCancelledException(this.message);
+  AppException(this.message);
+  @override
+  String toString() {
+    return "AppException: $message";
+  }
 }
 
-class InternetConnectionErrorException implements Exception {
-  final String message;
-  InternetConnectionErrorException(this.message);
+class RequestCancelledException extends AppException {
+  RequestCancelledException(super.message);
 }
 
-class UnexpectedErrorException implements Exception {
-  final String message;
-  UnexpectedErrorException(this.message);
+class InternetConnectionErrorException extends AppException {
+  
+  InternetConnectionErrorException(super.message);
 }
 
-class UnableToProcessException implements Exception {
-  final String message;
-  UnableToProcessException(this.message);
+class UnexpectedErrorException extends AppException {
+  
+  UnexpectedErrorException(super.message);
 }
 
-class RequestTimeoutException implements Exception {
-  final String message;
-  RequestTimeoutException(this.message);
+class UnableToProcessException extends AppException {
+  
+  UnableToProcessException(super.message);
 }
 
-class ReceiveTimeoutException implements Exception {
-  final String message;
-  ReceiveTimeoutException(this.message);
+class RequestTimeoutException extends AppException {
+  
+  RequestTimeoutException(super.message);
 }
 
-class SendTimeoutException implements Exception {
-  final String message;
-  SendTimeoutException(this.message);
+class ReceiveTimeoutException extends AppException {
+  
+  ReceiveTimeoutException(super.message);
 }
 
-class BadRequestException implements Exception {
-  final String message;
-  BadRequestException(this.message);
+class SendTimeoutException extends AppException {
+  
+  SendTimeoutException(super.message);
 }
 
-class UnauthorizedRequestException implements Exception {
-  final String message;
-  UnauthorizedRequestException(this.message);
+class BadRequestException extends AppException {
+  
+  BadRequestException(super.message);
 }
 
-class ForbiddenException implements Exception {
-  final String message;
-  ForbiddenException(this.message);
+class UnauthorizedRequestException extends AppException {
+  
+  UnauthorizedRequestException(super.message);
 }
 
-class NotFoundException implements Exception {
-  final String message;
-  NotFoundException(this.message);
+class ForbiddenException extends AppException {
+  
+  ForbiddenException(super.message);
 }
 
-class UnProcessableEntityException implements Exception {
-  final String message;
-  UnProcessableEntityException(this.message);
+class NotFoundException extends AppException {
+  
+  NotFoundException(super.message);
+}
+
+class UnProcessableEntityException extends AppException {
+  
+  UnProcessableEntityException(super.message);
 }

@@ -19,27 +19,31 @@ class DefaultApiErrorHandler extends ApiErrorHandler {
 
   @override
   Exception onError(error) {
-    logger.e('CoreNetworkExceptions', error: error.toString(),);
-
     if (error is Exception) {
       try {
         if (error is DioException) {
+          logger.e('DefaultApiErrorHandler', error: error.toString(), stackTrace: error.stackTrace);
           return _handleDioError(error);
         }
 
         if (error is SocketException) {
+          logger.e('DefaultApiErrorHandler', error: error.toString(),);
           return InternetConnectionErrorException('sorry_internet_connection_error');
         }
 
         return UnexpectedErrorException('sorry_something_went_wrong');
       } catch (_) {
+        logger.e('DefaultApiErrorHandler', error: error.toString(),);
         return UnexpectedErrorException('sorry_something_went_wrong');
       }
     }
 
     if (error.toString().contains("is not a subtype of")) {
+      logger.e('DefaultApiErrorHandler', error: error.toString(),);
       return UnableToProcessException('unable_to_process_data');
     }
+
+    logger.e('DefaultApiErrorHandler', error: error.toString(),);
     return UnexpectedErrorException('sorry_something_went_wrong');
   }
 
@@ -64,32 +68,26 @@ class DefaultApiErrorHandler extends ApiErrorHandler {
   }
 
   static Exception _getDioResponseException(DioException error) {
-    switch (error.response!.statusCode) {
+    switch (error.response?.statusCode) {
       case 400:
-        String message = '';
-        if(error.response!.data['message'] is List) {
-          List<String> messages = List<String>.from(error.response!.data['message'].map((x) => x.toString()));
-          message =  messages.join('\n');
-        } else {
-          message = error.response!.data['message'];
-        }
+        String message = error.response?.statusMessage??'bad_request';
         return BadRequestException(message);
 
       case 401:
-        /// Here could perform logout 
-        String message = error.response!.data['message'];
+        /// Here could perform logout
+        String message = error.response?.statusMessage??'unauthorized';
         return UnauthorizedRequestException(message);
 
       case 403:
-        String message = error.response!.data['message'];
+        String message = error.response?.statusMessage??'forbidden';
         return ForbiddenException(message);
 
       case 404:
-        String message = error.response!.data['message'];
+        String message = error.response?.statusMessage??'not_found';
         return NotFoundException(message);
         
       case 422:
-        String message = error.response!.data['message'];
+        String message = error.response?.statusMessage??'un_processable_entity';
         return UnProcessableEntityException(message);
         
       default:
