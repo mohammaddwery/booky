@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../components/app_button.dart';
+import '../../../theme/app_colors.dart';
 import '../../../theme/text_style.dart';
 import '../bloc/upsert_book_cubit.dart';
-import '../../../../repository/user_book.dart';
+import '../../../../data/models/user_book.dart';
 
 @RoutePage()
 class UpsertBookPage extends StatelessWidget {
@@ -18,7 +19,7 @@ class UpsertBookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UpsertBookCubit(context.read<BooksRepository>()),
+      create: (context) => UpsertBookCubit(context.read<BooksRepository>())..initFieldValues(book),
       child: UpsertBookView(book),
     );
   }
@@ -34,7 +35,8 @@ class UpsertBookView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Book', style: AppTextStyle.appbarTitleStyle,
+          book == null ? 'Add Book' : 'Update Book',
+          style: AppTextStyle.appbarTitleStyle,
         ),
       ),
       body: Padding(
@@ -43,6 +45,7 @@ class UpsertBookView extends StatelessWidget {
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 30. verticalSpace,
                 AppTextField(
@@ -68,15 +71,30 @@ class UpsertBookView extends StatelessWidget {
                   maxLine: 7,
                   onChanged: cubit.onDescriptionChanged,
                 ),
-                32. verticalSpace,
+                24. verticalSpace,
+                Text(
+                  'Publish date',
+                  style: AppTextStyle.style.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 11.sp,
+                  ),
+                ),
+                4.verticalSpace,
                 DatePicker(
                   initialDate: book?.publish,
                   onChanged: cubit.onPublishChanged,
                 ),
                 80. verticalSpace,
                 AppButton(
-                  title: 'Add Book',
-                  onClicked: () => cubit.addBook(),
+                  title: book == null ? 'Add Book' : 'Update Book',
+                  onClicked: () {
+                    if(book == null) {
+                      cubit.addBook();
+                    } else {
+                      cubit.updateBook(book!.id);
+                    }
+                  },
                 ),
                 24. verticalSpace,
               ],

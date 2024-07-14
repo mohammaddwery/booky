@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../repository/user_book.dart';
+import '../../data/models/user_book.dart';
 import '../pages/book_details/view/book_details_page.dart';
 import '../pages/book_search/view/book_search_page.dart';
 import '../pages/my_books/view/my_books_page.dart';

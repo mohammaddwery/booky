@@ -1,4 +1,4 @@
-import 'package:booky/repository/user_book.dart';
+import 'package:booky/data/models/user_book.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,7 +11,14 @@ import 'upsert_book_state.dart';
 class UpsertBookCubit extends Cubit<UpsertBookState> {
   final BooksRepository _booksRepository;
   UpsertBookCubit(this._booksRepository): super(UpsertBookState());
-  
+
+  initFieldValues(UserBook? book) {
+    _title = book?.title;
+    _description = book?.description;
+    _author = book?.author;
+    _publish = book?.publish;
+  }
+
   String? _title;
   String? _description;
   String? _author;
@@ -34,28 +41,48 @@ class UpsertBookCubit extends Cubit<UpsertBookState> {
   void addBook() {
     String? validationMessage = _validateInputs();
     if(validationMessage!=null) {
-      Fluttertoast.showToast(
-          msg: validationMessage,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM
-        ,
-          backgroundColor: AppColors.error,
-          textColor: AppColors.accent,
-          fontSize: 14.sp,
-      );
+      _showToast(validationMessage);
       return;
     }
 
-    _booksRepository.addUserBook(UserBook(
-        author: _author!, 
-        title: _title!,
-        description: _description!, 
-        publish: _publish!,
-    ),);
+    _booksRepository.addUserBook(_userBook,);
     getIt.get<AppRouter>().push(const MyBooksRoute());
   }
 
-  _validateInputs() {
+  void updateBook(int bookId) {
+    String? validationMessage = _validateInputs();
+    if(validationMessage!=null) {
+      _showToast(validationMessage);
+      return;
+    }
+    final userBook = _booksRepository.updateUserBook(
+      bookId: bookId,
+      book: _userBook,
+    );
+    getIt.get<AppRouter>().maybePop(userBook.id);
+  }
+
+  UserBook get _userBook => UserBook(
+    id: DateTime.now().millisecond,
+    author: _author!,
+    title: _title!,
+    description: _description!,
+    publish: _publish!,
+  );
+
+  _showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: AppColors.error,
+      textColor: AppColors.accent,
+      fontSize: 14.sp,
+    );
+  }
+
+
+  String? _validateInputs() {
     /// Title's validation
     if (_title?.isEmpty ?? true) {
       return 'Please enter your book\'s title';

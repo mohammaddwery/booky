@@ -5,7 +5,9 @@ class UserBook extends Equatable {
   final String title;
   final String description;
   final DateTime publish;
+  final int id;
   const UserBook({
+    required this.id,
     required this.author,
     required this.title,
     required this.description,
@@ -14,6 +16,7 @@ class UserBook extends Equatable {
 
   @override
   List<Object?> get props => [
+    id,
     author,
     title,
     description,

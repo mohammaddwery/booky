@@ -1,5 +1,5 @@
 import 'package:booky/repository/books_repository.dart';
-import '../../repository/user_book.dart';
+import '../models/user_book.dart';
 import '../models/book.dart';
 
 class AppBooksRepository extends BooksRepository {
@@ -29,17 +29,24 @@ class AppBooksRepository extends BooksRepository {
   Future removeFavoriteBook(String workId) => storeProvider.removeFavoriteBook(workId);
 
   @override
-  List<UserBook> addUserBook(UserBook book) {
+  UserBook addUserBook(UserBook book) {
     _myRunTimeBooks.insert(0, book);
-    final books =  getUserBooks();
-    print('addUserBook() ${books.length}');
-
-    return books;
+    return getUserBooks().first;
   }
 
   @override
   List<UserBook> getUserBooks() {
-    print('getUserBooks() ${_myRunTimeBooks.length}');
-    return _myRunTimeBooks;
+    return List<UserBook>.from(_myRunTimeBooks);
+  }
+
+  @override
+  UserBook updateUserBook({required int bookId, required UserBook book}) {
+    removeUserBook(bookId);
+    return addUserBook(book);
+  }
+
+  @override
+  void removeUserBook(int id) {
+    _myRunTimeBooks.removeWhere((element) => element.id == id);
   }
 }

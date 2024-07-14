@@ -1,6 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:booky/core/utils/app_helpers.dart';
-import 'package:booky/repository/user_book.dart';
+import 'package:booky/presentation/pages/my_books/bloc/my_books_cubit.dart';
+import 'package:booky/presentation/routes/app_router.dart';
+import 'package:booky/data/models/user_book.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/text_style.dart';
@@ -31,6 +35,17 @@ class MyBookCard extends StatelessWidget {
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
                   ),
+                ),
+              ),
+              8.horizontalSpace,
+              GestureDetector(
+                onTap: () => context.pushRoute(UpsertBookRoute(book: book,)).then((value) {
+                  context.read<MyBooksCubit>().getMyBooks();
+                }),
+                child: Icon(
+                  Icons.edit_note_rounded,
+                  size: 30.r,
+                  color: AppColors.primary,
                 ),
               ),
             ],

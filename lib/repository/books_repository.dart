@@ -1,7 +1,7 @@
 import '../data/models/book.dart';
 import '../data/resources/local/books_store_provider.dart';
 import '../data/resources/remote/books_api_provider.dart';
-import 'user_book.dart';
+import '../data/models/user_book.dart';
 
 abstract class BooksRepository {
   final BooksApiProvider apiProvider;
@@ -19,6 +19,8 @@ abstract class BooksRepository {
   Future removeFavoriteBook(String workId);
 
   /// runtime user's books created by him/her
-  List<UserBook> addUserBook(UserBook book);
+  UserBook addUserBook(UserBook book);
   List<UserBook> getUserBooks();
+  UserBook updateUserBook({required int bookId, required UserBook book,});
+  void removeUserBook(int id);
 }

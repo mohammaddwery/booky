@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../../repository/user_book.dart';
+import '../../../../data/models/user_book.dart';
 
 class MyBooksState extends Equatable {
   final List<UserBook> books;
