@@ -1,8 +1,11 @@
 import 'package:booky/repository/books_repository.dart';
+import '../../repository/user_book.dart';
 import '../models/book.dart';
 
 class AppBooksRepository extends BooksRepository {
   AppBooksRepository(super.apiProvider, super.storeProvider,);
+
+  final List<UserBook> _myRunTimeBooks = [];
 
   /// Remote resources functionalities
   @override
@@ -24,4 +27,15 @@ class AppBooksRepository extends BooksRepository {
 
   @override
   Future removeFavoriteBook(String workId) => storeProvider.removeFavoriteBook(workId);
+
+  @override
+  List<UserBook> addUserBook(UserBook book) {
+    _myRunTimeBooks.insert(0, book);
+    return getUserBooks();
+  }
+
+  @override
+  List<UserBook> getUserBooks() {
+    return _myRunTimeBooks;
+  }
 }

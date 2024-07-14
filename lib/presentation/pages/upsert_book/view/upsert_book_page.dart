@@ -1,13 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:booky/presentation/components/app_text_field.dart';
 import 'package:booky/presentation/components/date_picker/date_picker.dart';
+import 'package:booky/repository/books_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../components/app_button.dart';
 import '../../../theme/text_style.dart';
 import '../bloc/upsert_book_cubit.dart';
-import 'user_book.dart';
+import '../../../../repository/user_book.dart';
 
 @RoutePage()
 class UpsertBookPage extends StatelessWidget {
@@ -17,7 +18,7 @@ class UpsertBookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UpsertBookCubit(),
+      create: (context) => UpsertBookCubit(context.read<BooksRepository>()),
       child: UpsertBookView(book),
     );
   }

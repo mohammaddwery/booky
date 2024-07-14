@@ -1,13 +1,17 @@
+import 'package:booky/presentation/routes/app_router.dart';
+import 'package:booky/repository/user_book.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../../../core/di/dependencies_container.dart';
+import '../../../../repository/books_repository.dart';
 import '../../../theme/app_colors.dart';
 import 'upsert_book_state.dart';
 
 class UpsertBookCubit extends Cubit<UpsertBookState> {
-  UpsertBookCubit(): super(UpsertBookState());
-
-
+  final BooksRepository _booksRepository;
+  UpsertBookCubit(this._booksRepository): super(UpsertBookState());
+  
   String? _title;
   String? _description;
   String? _author;
@@ -42,7 +46,13 @@ class UpsertBookCubit extends Cubit<UpsertBookState> {
       return;
     }
 
-
+    _booksRepository.addUserBook(UserBook(
+        author: _author!, 
+        title: _title!,
+        description: _description!, 
+        publish: _publish!,
+    ),);
+    // getIt.get<AppRouter>().push(MyBooksRoute());
   }
 
   _validateInputs() {
