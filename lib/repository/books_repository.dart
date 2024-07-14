@@ -13,7 +13,7 @@ abstract class BooksRepository {
 
   /// Local resource functionalities
   List<String> getFavoriteBooks();
-  Future<List<String>> addFavoriteBook(String workId);
+  Future addFavoriteBook(String workId);
   Future<List<String>> addFavoriteBooks(List<String> workIds);
   Future removeFavoriteBook(String workId);
 }

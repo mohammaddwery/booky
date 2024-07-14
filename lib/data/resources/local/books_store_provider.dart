@@ -6,7 +6,7 @@ abstract class BooksStoreProvider {
   BooksStoreProvider(this._storeManager);
   
   List<String> getFavoriteBooks();
-  Future<List<String>> addFavoriteBook(String workId);
+  Future addFavoriteBook(String workId);
   Future<List<String>> addFavoriteBooks(List<String> workIds);
   Future removeFavoriteBook(String workId);
 }
@@ -15,10 +15,10 @@ class AppBooksStoreProvider extends BooksStoreProvider {
   AppBooksStoreProvider(super.storeManager);
 
   @override
-  Future<List<String>> addFavoriteBook(String workId) async {
+  Future addFavoriteBook(String workId) async {
     final favoriteBooks = getFavoriteBooks();
     favoriteBooks.add(workId);
-    return await addFavoriteBooks(favoriteBooks);
+    await addFavoriteBooks(favoriteBooks);
   }
 
   @override

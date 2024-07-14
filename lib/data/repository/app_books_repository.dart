@@ -14,7 +14,7 @@ class AppBooksRepository extends BooksRepository {
 
   /// Local resources functionalities
   @override
-  Future<List<String>> addFavoriteBook(String workId) => storeProvider.addFavoriteBook(workId);
+  Future addFavoriteBook(String workId) => storeProvider.addFavoriteBook(workId);
 
   @override
   Future<List<String>> addFavoriteBooks(List<String> workIds) => storeProvider.addFavoriteBooks(workIds);

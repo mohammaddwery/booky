@@ -16,14 +16,18 @@ final GetIt getIt = GetIt.instance;
 
 /// Service locator for all app's dependencies makes read and access to dependency easier
 /// once it registered in the container here.
-Future<void> registerDependencies(BuildConfig buildConfig) async {
+Future<void> registerDependencies(BuildConfig buildConfig, [SharedPreferences? sharedPreferences]) async {
   /// App's infrastructure dependencies
 
-  final SharedPreferences preferences = await SharedPreferences.getInstance();
+  if(sharedPreferences==null) {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    getIt.registerSingleton<StoreManager>(SharedPreferencesManager(preferences));
+  } else {
+    getIt.registerSingleton<StoreManager>(SharedPreferencesManager(sharedPreferences));
+  }
 
   getIt.registerSingleton<BuildConfig>(buildConfig);
   getIt.registerSingleton<AppBlocObserver>(AppBlocObserver());
-  getIt.registerSingleton<StoreManager>(SharedPreferencesManager(preferences));
   getIt.registerSingleton<AppRouter>(AppRouter());
   getIt.registerFactoryParam<Dio, List<Interceptor>?, dynamic>((interceptors, _) =>
       DioProvider.createInstance(baseUrl: buildConfig.apiBaseUrl, interceptors: interceptors,)

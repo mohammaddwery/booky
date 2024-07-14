@@ -12,7 +12,7 @@ class FavouriteBookCubit extends Cubit<FavouriteBookState> {
     emit(FavouriteBookState(status));
   }
 
-  Future toggleFavourite(String workId) async {
+  Future<void> toggleFavourite(String workId) async {
     final status = state.status;
     if(status) {
       await _booksRepository.removeFavoriteBook(workId);

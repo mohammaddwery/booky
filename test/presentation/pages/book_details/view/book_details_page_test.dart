@@ -8,33 +8,44 @@ import 'package:booky/presentation/components/error_placeholder.dart';
 import 'package:booky/presentation/components/loading.dart';
 import 'package:booky/presentation/pages/book_details/cubit/book_details_cubit.dart';
 import 'package:booky/presentation/pages/book_details/cubit/book_details_state.dart';
+import 'package:booky/presentation/pages/book_details/cubit/favourite_book_cubit.dart';
+import 'package:booky/presentation/pages/book_details/cubit/favourite_book_state.dart';
 import 'package:booky/presentation/pages/book_details/view/book_details_page.dart';
 import 'package:booky/presentation/pages/book_details/widgets/book_details.dart';
+import 'package:booky/presentation/pages/book_details/widgets/favourite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../app_test.dart';
 
 class MockBookDetailsCubit extends MockCubit<BookDetailsState>
     implements BookDetailsCubit {}
+class MockFavouriteBookCubit extends MockCubit<FavouriteBookState>
+    implements FavouriteBookCubit {}
+class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
+  late SharedPreferences sharePreferences;
   late BookDetailsCubit bookCubit;
+  late FavouriteBookCubit favouriteBookCubit;
   late Book book;
 
   setUpAll(() async {
+    sharePreferences = MockSharedPreferences();
     await registerDependencies(DevelopmentBuildConfig(
       apiBaseUrl: 'https://openlibrary.org/',
       coverImageBaseUrl: 'https://covers.openlibrary.org/b/',
       environment: AppEnvironment.development,
-    ));
+    ), sharePreferences);
     Bloc.observer = getIt.get<AppBlocObserver>();
   });
 
   setUp(() {
     bookCubit = MockBookDetailsCubit();
+    favouriteBookCubit = MockFavouriteBookCubit();
     book = const Book(workId: 'workId', authorName: 'authorName', title: 'title', firstSentence: 'firstSentence');
 
     when(() => bookCubit.state).thenReturn(BookLoading(),);
@@ -172,5 +183,20 @@ void main() {
     });
   });
 
+  group('FavouriteBookButton', () {
+    testWidgets('renders FavouriteButton widget', (tester) async {
+      when(() => favouriteBookCubit.state).thenReturn(const FavouriteBookState(false),);
 
+      await tester.pumpApp(BlocProvider.value(
+        value: bookCubit,
+        child: const BookDetailsView(
+          workId: 'workId',
+          author: 'author',
+        ),
+      ));
+      await tester.pump();
+
+      expect(find.byType(FavouriteButton), findsOneWidget);
+    });
+  });
 }
