@@ -12,6 +12,14 @@ class AppTextStyle {
     height: 1.0,
   );
 
+  static TextStyle get appbarTitleStyle => TextStyle(
+    fontFamily: fontFamily,
+    height: 1.0,
+    color: AppColors.grey90,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+  );
+
   static TextStyle get emptyStateStyle => TextStyle(
     fontFamily: fontFamily,
     height: 1.0,

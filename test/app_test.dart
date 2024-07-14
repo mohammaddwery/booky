@@ -5,6 +5,7 @@ import 'package:booky/core/utils/app_constants.dart';
 import 'package:booky/main_development.dart';
 import 'package:booky/presentation/theme/app_colors.dart';
 import 'package:booky/presentation/theme/text_style.dart';
+import 'package:booky/repository/books_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,21 +32,24 @@ void main() {
 
 extension WidgetTesterExtension on WidgetTester {
   Future<void> pumpApp(Widget widget) async => await pumpWidget(
-      ScreenUtilInit(
-        designSize: const Size(375, 812),
-        builder: (context, child) {
-          return MaterialApp(
-            home: widget,
-            debugShowCheckedModeBanner: false,
-            themeMode: ThemeMode.light,
-            theme: ThemeData.light().copyWith(
-              textTheme: Theme.of(context)
-                  .textTheme
-                  .apply(fontFamily: fontFamily),
-              scaffoldBackgroundColor: AppColors.accent,
-            ),
-          );
-        },
+      RepositoryProvider.value(
+        value: getIt.get<BooksRepository>(),
+        child: ScreenUtilInit(
+          designSize: const Size(375, 812),
+          builder: (context, child) {
+            return MaterialApp(
+              home: widget,
+              debugShowCheckedModeBanner: false,
+              themeMode: ThemeMode.light,
+              theme: ThemeData.light().copyWith(
+                textTheme: Theme.of(context)
+                    .textTheme
+                    .apply(fontFamily: fontFamily),
+                scaffoldBackgroundColor: AppColors.accent,
+              ),
+            );
+          },
+        ),
       )
   );
 }

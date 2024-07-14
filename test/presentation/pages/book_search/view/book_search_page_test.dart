@@ -4,7 +4,9 @@ import 'package:booky/core/di/dependencies_container.dart';
 import 'package:booky/core/utils/app_constants.dart';
 import 'package:booky/data/models/book.dart';
 import 'package:booky/main_development.dart';
+import 'package:booky/presentation/components/error_placeholder.dart';
 import 'package:booky/presentation/components/loading.dart';
+import 'package:booky/presentation/components/no_results_placeholder.dart';
 import 'package:booky/presentation/pages/book_search/bloc/book_search_bloc.dart';
 import 'package:booky/presentation/pages/book_search/bloc/book_search_event.dart';
 import 'package:booky/presentation/pages/book_search/bloc/book_search_state.dart';
@@ -136,7 +138,7 @@ void main() {
       ));
       await tester.pump();
 
-      expect(find.byType(Error), findsOneWidget);
+      expect(find.byType(ErrorPlaceholder), findsOneWidget);
     });
 
     testWidgets('renders SearchStateError widget then clicks reload to add BooksRequested to BookSearchBloc', (tester) async {
