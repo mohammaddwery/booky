@@ -1,13 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:booky/data/resources/repository/app_books_repository.dart';
 import 'package:booky/presentation/pages/book_search/bloc/book_search_bloc.dart';
 import 'package:booky/presentation/pages/book_search/bloc/book_search_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
-import '../../../../core/di/dependencies_container.dart';
-import '../../../../data/resources/remote/books_api_provider.dart';
 import '../../../../repository/books_repository.dart';
 import '../widgets/books_search_box.dart';
 import '../widgets/books_search_result.dart';

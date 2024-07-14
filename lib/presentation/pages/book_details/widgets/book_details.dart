@@ -46,7 +46,7 @@ class BookDetails extends StatelessWidget {
             16.verticalSpace,
             Text(
               key: const Key('BookDescription_Text'),
-              book.description??'',
+              book.description??book.subject??'',
               style: AppTextStyle.style.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w400,

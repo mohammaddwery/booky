@@ -5,4 +5,7 @@ class AppBooksRepository extends BooksRepository {
   AppBooksRepository(super.apiProvider);
   @override
   Future<List<Book>> getBooks() => apiProvider.getBooks();
+
+  @override
+  Future<Book> getBook(String workId) => apiProvider.getBook(workId);
 }

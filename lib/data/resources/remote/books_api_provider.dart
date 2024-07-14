@@ -6,6 +6,7 @@ abstract class BooksApiProvider {
   BooksApiProvider(this._apiManager);
 
   Future<List<Book>> getBooks();
+  Future<Book> getBook(String workId);
 }
 
 class AppBooksApiProvider extends BooksApiProvider {
@@ -22,8 +23,16 @@ class AppBooksApiProvider extends BooksApiProvider {
     );
     return adaptBooksFromJson(response['docs']);
   }
+  @override
+  Future<Book> getBook(workId) async {
+    final response = await _apiManager.get(
+      url: '${_BookApiEndpoints.works}/$workId.json',
+    );
+    return Book.fromJson(response);
+  }
 }
 
 abstract class _BookApiEndpoints {
   static const String books = 'search.json';
+  static const String works = 'works';
 }

@@ -15,7 +15,7 @@ class Book extends Equatable {
   final String? firstSentence;
   final String? subject;
   final String? description;
-  final DateTime? firstPublishDate;
+  final DateTime? created;
   const Book({
     required this.workId,
     required this.authorName,
@@ -24,13 +24,25 @@ class Book extends Equatable {
     this.firstSentence,
     this.subject,
     this.description,
-    this.firstPublishDate,
+    this.created,
   });
 
   /// The backend's response is weird so I handled as it is. Sorry!
   factory Book.fromJson(Map<String, dynamic> json) {
-    List<String> firstSentences = List<String>.from(json['first_sentence']??[]);
-    String? firstSentence = firstSentences.isNotEmpty ? firstSentences.first : null;
+    String? firstSentence;
+    if (json['first_sentence'] is List) {
+      List<String> firstSentences = List<String>.from(json['first_sentence']??[]);
+      firstSentence = firstSentences.isNotEmpty ? firstSentences.first : null;
+    } else {
+      firstSentence = json['first_sentence']?['value'];
+    }
+
+    String? description;
+    if(json['description'] is String) {
+      description = json['description'];
+    } else {
+      description = json['description']?['value'];
+    }
 
     List<String> subjects = List<String>.from(json['subject']??[]);
     String? subject = subjects.isNotEmpty ? subjects.first : null;
@@ -39,17 +51,43 @@ class Book extends Equatable {
     String authorName = authorNames.isNotEmpty ? authorNames.first : '';
 
     final workKey = (json['key']??'').toString();
-    final workId = workKey.startsWith('/') ? workKey.substring(1) : workKey;
+    final workId = workKey.startsWith('/') ? workKey.substring(7) : workKey;
+
+    List<int> covers = List<int>.from(json['covers']??[]);
+    int? cover = json['cover_i'];
+    cover = covers.isNotEmpty ? covers.first : (cover);
 
     return Book(
       title: json['title']??'',
       firstSentence: firstSentence,
       subject: subject,
-      coverId: json['cover_i'],
+      coverId: cover,
       authorName: authorName,
       workId: workId,
+      created: json['created']==null ? null : DateTime.tryParse(json['created']['value']),
+      description: description,
     );
   }
+
+  Book copyWith({
+    String? workId,
+    String? authorName,
+    String? title,
+    int? coverId,
+    String? firstSentence,
+    String? subject,
+    String? description,
+    DateTime? firstPublishDate,
+  }) => Book(
+      workId: workId??this.workId,
+      authorName: authorName??this.authorName,
+      title: title??this.title,
+      coverId: coverId??this.coverId,
+      firstSentence: firstSentence??this.firstSentence,
+      subject: subject??this.subject,
+      description: description??this.description,
+      created: firstPublishDate??this.created,
+  );
 
   @override
   List<Object?> get props => [
@@ -68,7 +106,7 @@ extension BookExtension on Book {
     return '${getIt.get<BuildConfig>().coverImageBaseUrl}id/$coverId-M.jpg';
   }
 
-  String get formattedPublishDate => DateFormat('yyyy-MM-dd').format(firstPublishDate??DateTime.now());
+  String get formattedPublishDate => DateFormat('yyyy-MM-dd').format(created??DateTime.now());
 }
 
 extension BooksExtension on List<Book> {

@@ -6,4 +6,5 @@ abstract class BooksRepository {
   BooksRepository(this.apiProvider);
 
   Future<List<Book>> getBooks();
+  Future<Book> getBook(String workId);
 }
