@@ -1,4 +1,5 @@
 import 'package:booky/presentation/theme/app_colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +18,7 @@ class BookCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
         image: DecorationImage(
-          image: NetworkImage(book.cover,),
+          image: CachedNetworkImageProvider(book.cover,),
           fit: BoxFit.cover,
         ),
       ),
