@@ -8,7 +8,7 @@ class BookDetailsCubit extends Cubit<BookDetailsState> {
   final BooksRepository _booksRepository;
   BookDetailsCubit(this._booksRepository,): super(BookLoading());
 
-  Future<void> fetchBook(String workId, String author) async {
+  void fetchBook(String workId, String author) async {
     try {
       emit(BookLoading());
 
