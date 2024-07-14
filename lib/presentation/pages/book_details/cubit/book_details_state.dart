@@ -11,7 +11,7 @@ sealed class BookDetailsState extends Equatable {
 final class BookLoading extends BookDetailsState {}
 
 final class BookSuccess extends BookDetailsState {
-const BookSuccess(this.book);
+const BookSuccess(this.book,);
 final Book book;
 
 @override

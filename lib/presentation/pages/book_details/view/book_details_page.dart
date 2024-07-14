@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:booky/presentation/pages/book_details/widgets/book_details.dart';
+import 'package:booky/presentation/pages/book_details/widgets/favourite_button.dart';
 import 'package:booky/presentation/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +47,9 @@ class BookDetailsView extends StatelessWidget {
         title: Text(
           'Details', style: AppTextStyle.appbarTitleStyle,
         ),
+        actions: [
+          FavouriteButton(workId),
+        ],
       ),
       body: BlocBuilder<BookDetailsCubit, BookDetailsState>(
         builder: (context, state) {

@@ -77,7 +77,7 @@ class Book extends Equatable {
     String? firstSentence,
     String? subject,
     String? description,
-    DateTime? firstPublishDate,
+    DateTime? created,
   }) => Book(
       workId: workId??this.workId,
       authorName: authorName??this.authorName,
@@ -86,7 +86,7 @@ class Book extends Equatable {
       firstSentence: firstSentence??this.firstSentence,
       subject: subject??this.subject,
       description: description??this.description,
-      created: firstPublishDate??this.created,
+      created: created??this.created,
   );
 
   @override
