@@ -1,5 +1,4 @@
 import 'package:booky/presentation/pages/book_details/cubit/favourite_book_state.dart';
-import 'package:booky/presentation/theme/app_colors.dart';
 import 'package:booky/repository/books_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

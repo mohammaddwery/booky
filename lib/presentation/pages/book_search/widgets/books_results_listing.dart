@@ -18,7 +18,7 @@ class BooksResultsListing extends StatelessWidget {
         children: [
           if(index == 0) 16.verticalSpace,
           BookCard(books[index]),
-          if(index == itemCount-1) 32.verticalSpace,
+          if(index == itemCount-1) 100.verticalSpace,
         ],
       ),
     );

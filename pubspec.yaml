@@ -24,6 +24,7 @@ dependencies:
   mocktail_image_network: ^1.2.0
   intl: ^0.18.0
   shared_preferences: ^2.2.3
+  fluttertoast: ^8.2.6
 
 dev_dependencies:
   flutter_test:

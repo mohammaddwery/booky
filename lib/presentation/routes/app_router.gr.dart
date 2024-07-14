@@ -32,6 +32,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const BookSearchPage(),
       );
     },
+    UpsertBookRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const UpsertBookPage(),
+      );
+    },
   };
 }
 
@@ -88,6 +94,20 @@ class BookSearchRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'BookSearchRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [UpsertBookPage]
+class UpsertBookRoute extends PageRouteInfo<void> {
+  const UpsertBookRoute({List<PageRouteInfo>? children})
+      : super(
+          UpsertBookRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UpsertBookRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

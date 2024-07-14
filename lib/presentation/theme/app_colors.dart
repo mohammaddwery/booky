@@ -10,5 +10,6 @@ abstract class AppColors {
   static const Color error = Colors.redAccent;
   static Color grey90 = Colors.grey.shade900;
   static Color grey30 = Colors.grey.shade300;
+  static Color white = Colors.white;
 
 }
