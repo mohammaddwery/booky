@@ -32,10 +32,21 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const BookSearchPage(),
       );
     },
-    UpsertBookRoute.name: (routeData) {
+    MyBooksRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const UpsertBookPage(),
+        child: const MyBooksPage(),
+      );
+    },
+    UpsertBookRoute.name: (routeData) {
+      final args = routeData.argsAs<UpsertBookRouteArgs>(
+          orElse: () => const UpsertBookRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: UpsertBookPage(
+          book: args.book,
+          key: args.key,
+        ),
       );
     },
   };
@@ -99,15 +110,53 @@ class BookSearchRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [UpsertBookPage]
-class UpsertBookRoute extends PageRouteInfo<void> {
-  const UpsertBookRoute({List<PageRouteInfo>? children})
+/// [MyBooksPage]
+class MyBooksRoute extends PageRouteInfo<void> {
+  const MyBooksRoute({List<PageRouteInfo>? children})
       : super(
+          MyBooksRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MyBooksRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [UpsertBookPage]
+class UpsertBookRoute extends PageRouteInfo<UpsertBookRouteArgs> {
+  UpsertBookRoute({
+    UserBook? book,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           UpsertBookRoute.name,
+          args: UpsertBookRouteArgs(
+            book: book,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'UpsertBookRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<UpsertBookRouteArgs> page =
+      PageInfo<UpsertBookRouteArgs>(name);
+}
+
+class UpsertBookRouteArgs {
+  const UpsertBookRouteArgs({
+    this.book,
+    this.key,
+  });
+
+  final UserBook? book;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'UpsertBookRouteArgs{book: $book, key: $key}';
+  }
 }

@@ -97,6 +97,8 @@ class Book extends Equatable {
     coverId,
     firstSentence,
     subject,
+    description,
+    created,
   ];
 }
 

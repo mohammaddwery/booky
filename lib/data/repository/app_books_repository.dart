@@ -31,11 +31,15 @@ class AppBooksRepository extends BooksRepository {
   @override
   List<UserBook> addUserBook(UserBook book) {
     _myRunTimeBooks.insert(0, book);
-    return getUserBooks();
+    final books =  getUserBooks();
+    print('addUserBook() ${books.length}');
+
+    return books;
   }
 
   @override
   List<UserBook> getUserBooks() {
+    print('getUserBooks() ${_myRunTimeBooks.length}');
     return _myRunTimeBooks;
   }
 }

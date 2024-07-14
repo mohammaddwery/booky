@@ -1,10 +1,10 @@
-import 'package:booky/presentation/routes/app_router.dart';
 import 'package:booky/repository/user_book.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../core/di/dependencies_container.dart';
 import '../../../../repository/books_repository.dart';
+import '../../../routes/app_router.dart';
 import '../../../theme/app_colors.dart';
 import 'upsert_book_state.dart';
 
@@ -52,7 +52,7 @@ class UpsertBookCubit extends Cubit<UpsertBookState> {
         description: _description!, 
         publish: _publish!,
     ),);
-    // getIt.get<AppRouter>().push(MyBooksRoute());
+    getIt.get<AppRouter>().push(const MyBooksRoute());
   }
 
   _validateInputs() {
@@ -80,7 +80,7 @@ class UpsertBookCubit extends Cubit<UpsertBookState> {
     }
 
     if (_description!.length < 20 || _description!.length > 400) {
-      return 'Please keep your book\'s description between 20 and 400 characters';
+      return 'Please keep your book\'s description between 20 and 200 characters';
     }
 
     /// Publish date validation
