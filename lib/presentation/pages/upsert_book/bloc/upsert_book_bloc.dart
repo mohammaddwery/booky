@@ -25,7 +25,7 @@ class UpsertBookBloc extends Bloc<UpsertBookEvent, UpsertBookState> {
     if(validationMessage!=null) {
       return emit(UpsertBookFailure(
         validationMessage,
-        DateTime.now().millisecond,
+        event.userBook.id,
         state.title,
         state.author,
         state.description,
@@ -33,13 +33,7 @@ class UpsertBookBloc extends Bloc<UpsertBookEvent, UpsertBookState> {
       ));
     }
 
-    _booksRepository.addUserBook(UserBook(
-      id: DateTime.now().millisecond,
-      author: state.author!,
-      title: state.title!,
-      description: state.description!,
-      publish: state.publish!,
-    ));
+    _booksRepository.addUserBook(event.userBook);
     emit(AddBookSuccess());
   }
 
@@ -48,7 +42,7 @@ class UpsertBookBloc extends Bloc<UpsertBookEvent, UpsertBookState> {
     if(validationMessage!=null) {
       return emit(UpsertBookFailure(
         validationMessage,
-        DateTime.now().millisecond,
+        event.userBook.id,
         state.title,
         state.author,
         state.description,
@@ -57,13 +51,7 @@ class UpsertBookBloc extends Bloc<UpsertBookEvent, UpsertBookState> {
     }
     final userBook = _booksRepository.updateUserBook(
       bookId: event.bookId,
-      book: UserBook(
-        id: DateTime.now().millisecond,
-        author: state.author!,
-        title: state.title!,
-        description: state.description!,
-        publish: state.publish!,
-      ),
+      book: event.userBook,
     );
     emit(UpdateBookSuccess(userBook.id));
   }

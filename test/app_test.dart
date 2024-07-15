@@ -10,15 +10,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
+  late SharedPreferences sharePreferences;
+
   group('MyApp', () {
     setUp(() async {
+      sharePreferences = MockSharedPreferences();
       await registerDependencies(DevelopmentBuildConfig(
         apiBaseUrl: 'https://openlibrary.org/',
         coverImageBaseUrl: 'https://covers.openlibrary.org/b/',
         environment: AppEnvironment.development,
-      ));
+      ), sharePreferences);
       Bloc.observer = getIt.get<AppBlocObserver>();
     });
 

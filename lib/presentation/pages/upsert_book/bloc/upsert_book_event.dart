@@ -1,20 +1,24 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../../data/models/user_book.dart';
+
 sealed class UpsertBookEvent extends Equatable {
   const UpsertBookEvent();
 }
 
 final class UpdateBookRequested extends UpsertBookEvent {
   final int bookId;
-  const UpdateBookRequested(this.bookId,);
+  final UserBook userBook;
+  const UpdateBookRequested(this.bookId, this.userBook,);
   @override
-  List<Object> get props => [ bookId ];
+  List<Object> get props => [ bookId, userBook ];
 }
 
 final class AddBookRequested extends UpsertBookEvent {
-  const AddBookRequested();
+  final UserBook userBook;
+  const AddBookRequested(this.userBook,);
   @override
-  List<Object> get props => [ ];
+  List<Object?> get props => [ userBook ];
 }
 
 final class BookTitleChanged extends UpsertBookEvent {

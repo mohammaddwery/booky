@@ -19,23 +19,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../app_test.dart';
 import 'package:mocktail_image_network/mocktail_image_network.dart';
 
 
 class MockSearchBloc extends MockBloc<BookSearchEvent, BookSearchState>
     implements BookSearchBloc {}
+class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
+  late SharedPreferences sharePreferences;
   late BookSearchBloc searchBloc;
   late List<Book> books;
 
   setUpAll(() async {
+    sharePreferences = MockSharedPreferences();
     await registerDependencies(DevelopmentBuildConfig(
       apiBaseUrl: 'https://openlibrary.org/',
       coverImageBaseUrl: 'https://covers.openlibrary.org/b/',
       environment: AppEnvironment.development,
-    ));
+    ), sharePreferences);
     Bloc.observer = getIt.get<AppBlocObserver>();
   });
 

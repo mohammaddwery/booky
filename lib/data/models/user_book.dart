@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class UserBook extends Equatable {
-  final String author;
-  final String title;
-  final String description;
-  final DateTime publish;
+  final String? author;
+  final String? title;
+  final String? description;
+  final DateTime? publish;
   final int id;
   const UserBook({
     required this.id,

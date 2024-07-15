@@ -62,6 +62,7 @@ class UpsertBookView extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            key: const Key('AppBar_Key'),
             title: Text(
               bookId == null ? 'Add Book' : 'Update Book',
               style: AppTextStyle.appbarTitleStyle,
@@ -70,6 +71,7 @@ class UpsertBookView extends StatelessWidget {
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w,),
             child: SingleChildScrollView(
+              key: const Key('UpsertBookForm_SingleChildScrollView'),
               child: Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
@@ -77,6 +79,7 @@ class UpsertBookView extends StatelessWidget {
                   children: [
                     30. verticalSpace,
                     AppTextField(
+                      key: const Key('BookTitle_AppTextField'),
                       label: 'Title',
                       minLine: 2,
                       maxLine: 3,
@@ -86,6 +89,7 @@ class UpsertBookView extends StatelessWidget {
                     ),
                     24. verticalSpace,
                     AppTextField(
+                      key: const Key('BookAuthor_AppTextField'),
                       label: 'Author',
                       maxLine: 1,
                       initialValue: state.author,
@@ -93,6 +97,7 @@ class UpsertBookView extends StatelessWidget {
                     ),
                     24. verticalSpace,
                     AppTextField(
+                      key: const Key('BookDescription_AppTextField'),
                       label: 'description',
                       initialValue: state.description,
                       minLine: 5,
@@ -110,17 +115,31 @@ class UpsertBookView extends StatelessWidget {
                     ),
                     4.verticalSpace,
                     DatePicker(
+                      key: const Key('BookPublishDate_DatePicker'),
                       initialDate: state.publish,
                       onChanged: (value) => bloc.add(BookPublishDateChanged(value)),
                     ),
                     80. verticalSpace,
                     AppButton(
+                      key: const Key('UpsertBook_AppButton'),
                       title: bookId == null ? 'Add Book' : 'Update Book',
                       onClicked: () {
                         if(bookId == null) {
-                          bloc.add(const AddBookRequested());
+                          bloc.add(AddBookRequested(UserBook(
+                            id: DateTime.now().millisecond,
+                            author: state.author,
+                            title: state.title,
+                            description: state.description,
+                            publish: state.publish,
+                          )));
                         } else {
-                          bloc.add(UpdateBookRequested(bookId!));
+                          bloc.add(UpdateBookRequested(bookId!, UserBook(
+                            id: DateTime.now().millisecond,
+                            author: state.author,
+                            title: state.title,
+                            description: state.description,
+                            publish: state.publish,
+                          )));
                         }
                       },
                     ),

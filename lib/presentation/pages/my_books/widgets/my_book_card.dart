@@ -29,7 +29,7 @@ class MyBookCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  book.title,
+                  book.title??'',
                   style: AppTextStyle.style.copyWith(
                     color: AppColors.primary,
                     fontSize: 18.sp,
@@ -52,7 +52,7 @@ class MyBookCard extends StatelessWidget {
           ),
           8.verticalSpace,
           Text(
-            book.description,
+            book.description??'',
             style: AppTextStyle.style.copyWith(
               color: AppColors.primary,
               fontSize: 12.sp,
@@ -63,7 +63,7 @@ class MyBookCard extends StatelessWidget {
           24.verticalSpace,
           Text(
             key: const Key('BookAuthor_Text'),
-            book.author,
+            book.author??'',
             style: AppTextStyle.style.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.w500,
@@ -73,7 +73,7 @@ class MyBookCard extends StatelessWidget {
           4.verticalSpace,
           Text(
             key: const Key('BookFirstPublishDate_Text'),
-            book.publish.format,
+            book.publish?.format??'',
             style: AppTextStyle.style.copyWith(
               color: AppColors.grey90,
               fontWeight: FontWeight.w500,
