@@ -70,35 +70,38 @@ App built to support multiple environments, Please check `~/lib/main_development
 App built with Clean architecture and Bloc state management respecting software engineering principles to be maintainable and scalable as much as possible in the boundaries of test's deadline.
 
 ### Files structure
-── lib
-    ├── core
-    │   ├── data
-    │   │    ├── local
-    │   │    └── remote
-    │   ├── di
-    │   └── utils
-    │   
-    ├── data
-    │   ├── resources
-    │   │    ├── local
-    │   │    └── remote
-    │   ├── repository
-    │   └── models
-    │
-    ├── repository
-    │    
-    ├── presentation
-    │   ├── pages
-    │   │    └── feature1
-    │   │           ├── bloc
-    │   │           ├── widgets
-    │   │           └── widgets
-    │   ├── routes
-    │   ├── theme
-    │   └── components  
-    │
-    ├── app.dart
-    └── main_development.dart
+
+```bash
+lib
+ ├── core
+ │   ├── data
+ │   │    ├── local
+ │   │    └── remote
+ │   ├── di
+ │   └── utils
+ │   
+ ├── data
+ │   ├── resources
+ │   │    ├── local
+ │   │    └── remote
+ │   ├── repository
+ │   └── models
+ │
+ ├── repository
+ │    
+ ├── presentation
+ │   ├── pages
+ │   │    └── feature1
+ │   │           ├── bloc
+ │   │           ├── widgets
+ │   │           └── widgets
+ │   ├── routes
+ │   ├── theme
+ │   └── components  
+ │
+ ├── app.dart
+ └── main_development.dart
+```
 
 
 Data flow goes from inner to outer(from data to presentation) and control flow geos from outer into inner(from presentation to data).
