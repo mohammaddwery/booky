@@ -4,7 +4,7 @@ This a technical test for "Senior Flutter Developer"
 
 ## Features
 - Books listing that fetched from webserver
-- Search for books by keyword
+- Search for books by keyword(search applied on fetched books locally)
 - Book's details
 - Mark book as favourite(stores the favourite in local storage)
 - Create a new book(stores the book in memory)
@@ -67,35 +67,38 @@ App built to support multiple environments, Please check `~/lib/main_development
 
 ## Architecture
 
-App built with Clean architecture and Bloc state management respecting software engineering principles to be maintainable and scalable 
+App built with Clean architecture and Bloc state management respecting software engineering principles to be maintainable and scalable as much as possible in the boundaries of test's deadline.
 
 ### Files structure
-
----lib
-    ---core
-        ---data
-            --local
-            --remote
-        ---di
-        ---utils
-    ---data
-        ---models
-        ---repository
-        ---resources
-            --local
-            --remote
-    ---repository
-    ---presentation
-        ---components
-        ---pages
-            --feature1
-                --bloc
-                --view
-                --widgets
-        ---routes
-        ---theme
-    ---app.dart
-    ---main_development.dart
+── lib
+    ├── core
+    │   ├── data
+    │   │    ├── local
+    │   │    └── remote
+    │   ├── di
+    │   └── utils
+    │   
+    ├── data
+    │   ├── resources
+    │   │    ├── local
+    │   │    └── remote
+    │   ├── repository
+    │   └── models
+    │
+    ├── repository
+    │    
+    ├── presentation
+    │   ├── pages
+    │   │    └── feature1
+    │   │           ├── bloc
+    │   │           ├── widgets
+    │   │           └── widgets
+    │   ├── routes
+    │   ├── theme
+    │   └── components  
+    │
+    ├── app.dart
+    └── main_development.dart
 
 
 Data flow goes from inner to outer(from data to presentation) and control flow geos from outer into inner(from presentation to data).
@@ -161,7 +164,7 @@ BooksSearchResults states
 - renders SearchStateError widget then clicks reload to add BooksRequested to BookSearchBloc
 
 on KeywordChanged triggered
-when booksSearchBox changes add KeywordChanged to BookSearchBloc
+- when booksSearchBox changes add KeywordChanged to BookSearchBloc
 
 
 ### 3. Book Details feature:
