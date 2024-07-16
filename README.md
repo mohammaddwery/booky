@@ -23,6 +23,7 @@ Make sure that you passed the setup process of Flutter/Dart [flutter_install_gui
 
 ```shell
   flutter pub get
+  dart pub add dev:build_runner
   flutter run ./lib/main_development.dart
 ```
 
